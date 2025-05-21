@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    input, select, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    input {
+      flex: 1;
+      min-width: 200px;
+    }
+    select {
+      width: 120px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Task Manager</h1>
+
+    <div class="form-group">
+      <input type="text" id="description" placeholder="Enter task description" />
+      <select id="priority">
+        <option value="1">1 (High)</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5 (Low)</option>
+      </select>
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <div>
+      <h2>Your Tasks</h2>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const tasks = [];
+
+    function addTask() {
+      const desc = document.getElementById('description').value.trim();
+      const priority = parseInt(document.getElementById('priority').value);
+
+      if (!desc) {
+        alert("Please enter a task description.");
+        return;
+      }
+
+      tasks.push({ description: desc, priority });
+      tasks.sort((a, b) => a.priority - b.priority);
+
+      displayTasks();
+      document.getElementById('description').value = '';
+    }
+
+    function displayTasks() {
+      const list = document.getElementById('taskList');
+      list.innerHTML = '';
+
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.textContent = `[${task.priority}] ${task.description}`;
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
